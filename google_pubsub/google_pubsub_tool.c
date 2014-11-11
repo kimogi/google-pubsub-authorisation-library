@@ -71,7 +71,7 @@ int authorized_create_topic(char *project_id, char *topic, char *auth_token, lon
   curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, connection_timeout);
   curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeout); 
 
-  char *auth_header = (char *)calloc(strlen(auth_token) + strlen("Authorization: Bearer "), sizeof(char));
+  char *auth_header = (char *)calloc(strlen(auth_token) + strlen("Authorization: Bearer ") + 1, sizeof(char));
   sprintf(auth_header, "Authorization: Bearer %s", auth_token);
 
   char *content_length_header = (char *)calloc(strlen("Content-Length: ") + 10 + 1, sizeof(char));
@@ -140,7 +140,7 @@ int authorized_publish_message(char *file_path, char *auth_token, long connectio
   curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, connection_timeout);
   curl_easy_setopt(curl, CURLOPT_TIMEOUT, timeout);
 
-  char *auth_header = (char *)calloc(strlen(auth_token) + strlen("Authorization: Bearer "), sizeof(char));
+  char *auth_header = (char *)calloc(strlen(auth_token) + strlen("Authorization: Bearer ") + 1, sizeof(char));
   sprintf(auth_header, "Authorization: Bearer %s", auth_token);
 
   char *content_length_header = (char *)calloc(strlen("Content-Length: ") + 10 + 1, sizeof(char));

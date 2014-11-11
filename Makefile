@@ -2,6 +2,7 @@
 
 export CC:=gcc
 export LIBS := -lrt -lcurl -lcrypto -lm
+export CFLAGS := -g
 
 SUBDIRS = prop_tool google_pubsub oauth
 .PHONY: subdirs $(SUBDIRS) clean

@@ -24,31 +24,31 @@ char *trim_quotes(char *str) {
 }
 
 int get_prop(char *file_path, char *prop, char **value, int max_lenght) {
-	int res;
-	FILE *file = fopen(file_path, "r");
-	if(!file) {
-		printf("Failed to open %s\n", file_path);	
-		res = FAILURE;
-	} else {
-		char *key = (char *)calloc(strlen(prop) + 1, sizeof(char));
-		strcpy(key, prop);
-		strcat(key, "=");	
-		
-		size_t read_len;
-		size_t len = 0;
-		char *read_buf = NULL;
-		while (-1 != (read_len = getline(&read_buf, &len, file))) {
-			memset(read_buf + read_len - 1, '\0', 1);
-			if(NULL != strstr(read_buf, key)) {
-				*value = (char *)calloc(strlen(read_buf) - strlen(key) + 1, sizeof(char));
-				memcpy(value[0], read_buf + strlen(key), strlen(read_buf) - strlen(key));
-				*value = trim_quotes(value[0]);
-				res = SUCCESS;
-				break;
-			}
-		}
-		fclose(file);
-		free(key);
-	}
-	return res;
+  int res;
+  FILE *file = fopen(file_path, "r");
+  if (!file) {
+    printf("Failed to open %s\n", file_path); 
+    res = FAILURE;
+  } else {
+    char *key = (char *)calloc(strlen(prop) + strlen("=") + 1, sizeof(char));
+    strcpy(key, prop);
+    strcat(key, "="); 
+
+    size_t read_len;
+    size_t len = 0;
+    char *read_buf = NULL;
+    while (-1 != (read_len = getline(&read_buf, &len, file))) {
+      memset(read_buf + read_len - 1, '\0', 1);
+      if (NULL != strstr(read_buf, key)) {
+        *value = (char *)calloc(strlen(read_buf) - strlen(key) + 1, sizeof(char));
+        memcpy(value[0], read_buf + strlen(key), strlen(read_buf) - strlen(key));
+        *value = trim_quotes(value[0]);
+        res = SUCCESS;
+        break;
+      }
+    }
+    fclose(file);
+    free(key);
+  }
+  return res;
 }
